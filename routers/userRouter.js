@@ -4,24 +4,35 @@ const Users = require("../models/userModel");
 const db = require("../database/db-config");
 const router = express.Router();
 
-router.post("/register", (req, res) => {
-  const user = req.body;
-  const hash = bcrypt.hashSync(user.password, 12);
-  user.password = hash;
+const {
+  registerRequirements,
+  loginRequirements,
+  checkForDuplicates,
+} = require("../middleware/usersMiddleware");
 
-  Users.add(user)
-    .then((saved_user) => {
-      res
-        .status(201)
-        .json({ message: `Successfully registered with ${user.email}` });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+router.post(
+  "/register",
+  registerRequirements,
+  checkForDuplicates,
+  (req, res) => {
+    const user = req.body;
+    const hash = bcrypt.hashSync(user.password, 12);
+    user.password = hash;
 
-router.post("/login", (req, res) => {
+    Users.add(user)
+      .then((saved_user) => {
+        res
+          .status(201)
+          .json({ message: `Successfully registered with ${user.email}` });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
+);
+
+router.post("/login", loginRequirements, (req, res) => {
   let { email, password } = req.body;
 
   Users.findBy({ email })

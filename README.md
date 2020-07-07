@@ -56,6 +56,15 @@ Schema:
 | password     | string |   yes    |      password      |
 | phone_number |  int   |    no    | format: ########## |
 
+_example_
+
+```
+{
+	"email": "testing12345@test.com",
+	"password": "ThisPasswordSucks"
+}
+```
+
 _the returned object will be:_
 
 ```
