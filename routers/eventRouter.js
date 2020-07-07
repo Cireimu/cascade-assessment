@@ -15,7 +15,7 @@ router.get("/failed-login", (req, res) => {
     });
 });
 
-router.get("/:id/user_events", validateUserId, (req, res) => {
+router.get("/:id/user-events", validateUserId, (req, res) => {
   const { id } = req.params;
   Events.findByUser(id)
     .then((user_events) => {

@@ -21,6 +21,6 @@ module.exports = {
     },
   },
 
-  // Usually I would have a staging and production config,
+  // Usually I would have a testing, staging and production configs,
   // but there's no need for that here
 };
